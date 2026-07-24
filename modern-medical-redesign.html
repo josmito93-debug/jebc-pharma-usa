@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuva - Premium Medical</title>
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"SF Pro Display"', '"Geist Sans"', '"Helvetica Neue"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        base: '#F7F6F3',
+                        surface: '#FFFFFF',
+                        border: '#EAEAEA',
+                        ink: '#111111',
+                        muted: '#787774',
+                        pastel: {
+                            red: { bg: '#FDEBEC', text: '#9F2F2D' },
+                            blue: { bg: '#E1F3FE', text: '#1F6C9F' },
+                            green: { bg: '#EDF3EC', text: '#346538' },
+                            yellow: { bg: '#FBF3DB', text: '#956400' },
+                        }
+                    },
+                    boxShadow: {
+                        'subtle': '0 2px 12px rgba(0,0,0,0.03)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body {
+            background-color: theme('colors.base');
+            color: theme('colors.ink');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+        
+        /* Initial GSAP state */
+        .gsap-reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            will-change: transform, opacity;
+        }
+
+        /* Ambient Background Motion */
+        .ambient-blob {
+            position: fixed;
+            top: 5%;
+            left: 15%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(230, 225, 215, 0.2) 0%, rgba(247, 246, 243, 0) 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            animation: drift 25s infinite alternate ease-in-out;
+        }
+        
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(4%, 6%) scale(1.05); }
+        }
+
+        /* Desaturated/Warm Image Treatment */
+        .premium-img {
+            filter: sepia(0.15) saturate(0.6) contrast(1.05);
+        }
+        
+        .img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
+            pointer-events: none;
+        }
+        
+        /* Strict Borders */
+        .editorial-border {
+            border: 1px solid theme('colors.border');
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden selection:bg-ink selection:text-white pb-24">
+
+<div class="ambient-blob"></div>
+
+<!-- Minimalist Navigation -->
+<header class="w-full max-w-5xl mx-auto px-6 py-8 flex items-center justify-between border-b editorial-border">
+    <div class="text-2xl font-serif tracking-tight font-medium">Nuva.</div>
+    <nav class="hidden md:flex gap-10 text-sm text-muted">
+        <a href="#" class="hover:text-ink transition-colors">Diagnostics</a>
+        <a href="#" class="hover:text-ink transition-colors">Specialists</a>
+        <a href="#" class="hover:text-ink transition-colors">Clinical Depts</a>
+        <a href="#" class="hover:text-ink transition-colors">Journal</a>
+    </nav>
+    <button class="bg-ink text-white px-5 py-2.5 text-sm rounded-md transition-all hover:bg-[#333333] active:scale-[0.98]">
+        Patient Portal
+    </button>
+</header>
+
+<main class="w-full max-w-5xl mx-auto px-6 py-24 space-y-40">
+    
+    <!-- 1. Stats Bar -->
+    <section class="gsap-reveal grid grid-cols-2 md:grid-cols-4 gap-px bg-border editorial-border rounded-xl overflow-hidden">
+        <div class="bg-surface p-10 text-center flex flex-col items-center justify-center">
+            <div class="font-serif text-4xl md:text-5xl tracking-tight mb-3">$250M</div>
+            <div class="text-xs text-muted font-mono uppercase tracking-widest">Healthcare Funding</div>
+        </div>
+        <div class="bg-surface p-10 text-center flex flex-col items-center justify-center">
+            <div class="font-serif text-4xl md:text-5xl tracking-tight mb-3">20M+</div>
+            <div class="text-xs text-muted font-mono uppercase tracking-widest">Patients Served</div>
+        </div>
+        <div class="bg-surface p-10 text-center flex flex-col items-center justify-center">
+            <div class="font-serif text-4xl md:text-5xl tracking-tight mb-3">95%</div>
+            <div class="text-xs text-muted font-mono uppercase tracking-widest">Satisfaction Rate</div>
+        </div>
+        <div class="bg-surface p-10 text-center flex flex-col items-center justify-center">
+            <div class="font-serif text-4xl md:text-5xl tracking-tight mb-3">200+</div>
+            <div class="text-xs text-muted font-mono uppercase tracking-widest">Medical Experts</div>
+        </div>
+    </section>
+
+    <!-- 2. Bento Box Hero ("We Offer Pro DNA Testing") -->
+    <section class="gsap-reveal">
+        <div class="mb-12 flex flex-col items-start gap-5">
+            <span class="bg-pastel-blue-bg text-pastel-blue-text text-xs font-mono uppercase tracking-[0.05em] px-3 py-1 rounded-full">Genomics</span>
+            <h2 class="text-5xl md:text-6xl font-serif tracking-tight leading-[1.1] max-w-3xl">Precision DNA analysis <br><span class="text-muted italic">for targeted care.</span></h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Main Bento -->
+            <div class="col-span-1 md:col-span-2 editorial-border rounded-xl bg-surface p-10 relative overflow-hidden flex flex-col justify-between min-h-[440px] group transition-all duration-300 hover:shadow-subtle">
+                <div class="relative z-10">
+                    <div class="text-2xl font-serif tracking-tight mb-4">Comprehensive sequencing</div>
+                    <p class="text-muted leading-relaxed max-w-md">Our advanced genomic profiling provides unprecedented insight into hereditary markers, allowing for truly personalized medical interventions.</p>
+                </div>
+                
+                <div class="relative z-10 mt-12 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-mono text-muted uppercase tracking-widest">Reports Generated</span>
+                        <span class="text-sm font-medium">5.5K</span>
+                    </div>
+                    <button class="flex items-center gap-2 bg-ink text-white px-5 py-2.5 text-sm rounded-md transition-all hover:bg-[#333333] active:scale-[0.98]">
+                        Start Diagnostics <i class="ph ph-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Abstract technical visual -->
+                <div class="absolute right-0 bottom-0 w-3/4 h-3/4 opacity-[0.03] pointer-events-none transform translate-x-12 translate-y-12">
+                    <svg viewBox="0 0 200 200" class="w-full h-full text-ink" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M10,100 C50,20 150,180 190,100" />
+                        <path d="M10,100 C50,180 150,20 190,100" />
+                        <line x1="40" y1="65" x2="40" y2="135" />
+                        <line x1="70" y1="35" x2="70" y2="165" />
+                        <line x1="100" y1="20" x2="100" y2="180" />
+                        <line x1="130" y1="35" x2="130" y2="165" />
+                        <line x1="160" y1="65" x2="160" y2="135" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-5">
+                <!-- Sub Bento 1 -->
+                <div class="flex-1 editorial-border rounded-xl bg-surface p-8 relative overflow-hidden transition-all duration-300 hover:shadow-subtle flex flex-col justify-between">
+                    <div>
+                        <div class="text-xl font-serif tracking-tight mb-2">Trusted & Secure</div>
+                        <p class="text-muted text-sm leading-relaxed">Enterprise-grade encryption for all patient genetic data.</p>
+                    </div>
+                    <div class="mt-8 flex justify-end">
+                        <img src="https://picsum.photos/seed/med-trusted/200/200" alt="Specialist" class="w-14 h-14 rounded-full object-cover premium-img" />
+                    </div>
+                </div>
+                <!-- Sub Bento 2 -->
+                <div class="flex-1 editorial-border rounded-xl bg-ink text-white p-8 relative overflow-hidden transition-all duration-300 hover:shadow-subtle flex flex-col justify-between">
+                    <div>
+                        <div class="text-4xl font-serif tracking-tight mb-1">99.9%</div>
+                        <p class="text-white/60 text-sm">Sequencing accuracy</p>
+                    </div>
+                    <div class="text-xs font-mono uppercase tracking-widest text-white/40 mt-8">
+                        CLIA Certified
+                    </div>
+                    <div class="absolute right-[-24px] top-[-24px] text-white/5">
+                        <i class="ph-fill ph-check-circle text-[160px]"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Specialized Medical Team -->
+    <section class="gsap-reveal">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div class="flex flex-col items-start gap-5 max-w-xl">
+                <span class="bg-pastel-green-bg text-pastel-green-text text-xs font-mono uppercase tracking-[0.05em] px-3 py-1 rounded-full">Practitioners</span>
+                <h2 class="text-4xl md:text-5xl font-serif tracking-tight leading-[1.1]">Specialized expertise.</h2>
+            </div>
+            <p class="text-muted text-sm max-w-xs md:text-right leading-relaxed">
+                From general practitioners to top specialists, our dedicated board is focused on precision healthcare.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="group cursor-pointer">
+                <div class="w-full aspect-[3/4] editorial-border rounded-xl bg-surface mb-5 overflow-hidden relative">
+                    <img src="https://picsum.photos/seed/doctor-m1/400/500" alt="Dr. Mehidi Hasan" class="w-full h-full object-cover premium-img transition-transform duration-700 group-hover:scale-105" />
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="text-lg font-serif tracking-tight mb-1">Dr. Mehidi Hasan</div>
+                <div class="text-sm text-muted">Heart Surgeon</div>
+            </div>
+            
+            <div class="group cursor-pointer">
+                <div class="w-full aspect-[3/4] editorial-border rounded-xl bg-surface mb-5 overflow-hidden relative">
+                    <img src="https://picsum.photos/seed/doctor-f1/400/500" alt="Dr. Hamida Jannat" class="w-full h-full object-cover premium-img transition-transform duration-700 group-hover:scale-105" />
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="text-lg font-serif tracking-tight mb-1">Dr. Hamida Jannat</div>
+                <div class="text-sm text-muted">Cardiologist & Medicine</div>
+            </div>
+            
+            <div class="group cursor-pointer">
+                <div class="w-full aspect-[3/4] editorial-border rounded-xl bg-surface mb-5 overflow-hidden relative">
+                    <img src="https://picsum.photos/seed/doctor-m2/400/500" alt="Dr. Haseeb Hossain" class="w-full h-full object-cover premium-img transition-transform duration-700 group-hover:scale-105" />
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="text-lg font-serif tracking-tight mb-1">Dr. Haseeb Hossain</div>
+                <div class="text-sm text-muted">Neurologist</div>
+            </div>
+            
+            <div class="group cursor-pointer">
+                <div class="w-full aspect-[3/4] editorial-border rounded-xl bg-surface mb-5 overflow-hidden relative">
+                    <img src="https://picsum.photos/seed/doctor-f2/400/500" alt="Dr. Jenifa Syed" class="w-full h-full object-cover premium-img transition-transform duration-700 group-hover:scale-105" />
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="text-lg font-serif tracking-tight mb-1">Dr. Jenifa Syed</div>
+                <div class="text-sm text-muted">Gynecologist</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Medical Departments -->
+    <section class="gsap-reveal">
+        <div class="flex flex-col md:flex-row justify-between mb-16 gap-8 border-b editorial-border pb-10">
+            <h2 class="text-4xl md:text-5xl font-serif tracking-tight leading-[1.1] max-w-md">Clinical<br>departments.</h2>
+            <p class="text-muted max-w-sm text-sm leading-relaxed md:pt-2">
+                A full range of specialized medical services, utilizing advanced technology and led by experienced surgeons.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-16">
+            <div class="group">
+                <div class="flex items-center justify-between mb-5">
+                    <span class="text-xs font-mono text-muted uppercase tracking-widest">Dept 01</span>
+                    <div class="w-9 h-9 rounded-full bg-pastel-red-bg text-pastel-red-text flex items-center justify-center">
+                        <i class="ph ph-heartbeat text-lg"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-medium tracking-tight mb-2 text-ink">Cardiology</h3>
+                <p class="text-sm text-muted leading-relaxed">Comprehensive heart care including angioplasty, ECG, and bypass surgery.</p>
+            </div>
+            
+            <div class="group">
+                <div class="flex items-center justify-between mb-5">
+                    <span class="text-xs font-mono text-muted uppercase tracking-widest">Dept 02</span>
+                    <div class="w-9 h-9 rounded-full bg-pastel-blue-bg text-pastel-blue-text flex items-center justify-center">
+                        <i class="ph ph-brain text-lg"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-medium tracking-tight mb-2 text-ink">Neurology</h3>
+                <p class="text-sm text-muted leading-relaxed">Advanced diagnosis and treatment of brain, nerve, and spinal conditions.</p>
+            </div>
+            
+            <div class="group">
+                <div class="flex items-center justify-between mb-5">
+                    <span class="text-xs font-mono text-muted uppercase tracking-widest">Dept 03</span>
+                    <div class="w-9 h-9 rounded-full bg-pastel-yellow-bg text-pastel-yellow-text flex items-center justify-center">
+                        <i class="ph ph-bone text-lg"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-medium tracking-tight mb-2 text-ink">Orthopedics</h3>
+                <p class="text-sm text-muted leading-relaxed">Expert bone and joint care: fractures, arthritis, joint replacement & rehab.</p>
+            </div>
+
+            <div class="group">
+                <div class="flex items-center justify-between mb-5">
+                    <span class="text-xs font-mono text-muted uppercase tracking-widest">Dept 04</span>
+                    <div class="w-9 h-9 rounded-full bg-pastel-green-bg text-pastel-green-text flex items-center justify-center">
+                        <i class="ph ph-stomach text-lg"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-medium tracking-tight mb-2 text-ink">Gastroenterology</h3>
+                <p class="text-sm text-muted leading-relaxed">Expert care for digestive system, liver, and pancreas disorders.</p>
+            </div>
+
+            <div class="group">
+                <div class="flex items-center justify-between mb-5">
+                    <span class="text-xs font-mono text-muted uppercase tracking-widest">Dept 05</span>
+                    <div class="w-9 h-9 rounded-full bg-pastel-red-bg text-pastel-red-text flex items-center justify-center">
+                        <i class="ph ph-baby text-lg"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-medium tracking-tight mb-2 text-ink">Pediatrics</h3>
+                <p class="text-sm text-muted leading-relaxed">Dedicated medical services for infants, children, and adolescents.</p>
+            </div>
+            
+            <div class="group">
+                <div class="flex items-center justify-between mb-5">
+                    <span class="text-xs font-mono text-muted uppercase tracking-widest">Dept 06</span>
+                    <div class="w-9 h-9 rounded-full bg-pastel-blue-bg text-pastel-blue-text flex items-center justify-center">
+                        <i class="ph ph-scan text-lg"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-medium tracking-tight mb-2 text-ink">Radiology</h3>
+                <p class="text-sm text-muted leading-relaxed">High-tech imaging services including MRI, CT scan, and precision X-ray.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Blog / Journal -->
+    <section class="gsap-reveal border-t editorial-border pt-24 mt-24">
+        <div class="flex flex-col items-start gap-5 mb-14">
+            <span class="bg-pastel-yellow-bg text-pastel-yellow-text text-xs font-mono uppercase tracking-[0.05em] px-3 py-1 rounded-full">Journal</span>
+            <h2 class="text-4xl md:text-5xl font-serif tracking-tight leading-[1.1]">Frontline research.</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <article class="group cursor-pointer flex flex-col">
+                <div class="w-full aspect-[4/3] editorial-border rounded-xl bg-surface mb-6 overflow-hidden relative">
+                    <img src="https://picsum.photos/seed/journal1/600/450" alt="Stethoscope" class="w-full h-full object-cover premium-img transition-transform duration-1000 group-hover:scale-105" />
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="flex items-center gap-3 mb-4 text-[11px] text-muted font-mono uppercase tracking-widest">
+                    <span>Medical Devices</span>
+                    <span class="text-border">•</span>
+                    <span>10 Feb 2026</span>
+                </div>
+                <h3 class="text-lg font-medium tracking-tight leading-snug mb-3 group-hover:text-muted transition-colors">How AI-powered diagnostic tools are transforming everyday clinical assessments.</h3>
+                <div class="flex items-center gap-2 text-sm text-ink mt-auto pt-4 font-medium">
+                    Read paper <i class="ph ph-arrow-right transition-transform group-hover:translate-x-1"></i>
+                </div>
+            </article>
+
+            <article class="group cursor-pointer flex flex-col">
+                <div class="w-full aspect-[4/3] editorial-border rounded-xl bg-surface mb-6 overflow-hidden relative">
+                    <img src="https://picsum.photos/seed/journal2/600/450" alt="DNA Strand" class="w-full h-full object-cover premium-img transition-transform duration-1000 group-hover:scale-105" />
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="flex items-center gap-3 mb-4 text-[11px] text-muted font-mono uppercase tracking-widest">
+                    <span>Genomics</span>
+                    <span class="text-border">•</span>
+                    <span>01 Jan 2026</span>
+                </div>
+                <h3 class="text-lg font-medium tracking-tight leading-snug mb-3 group-hover:text-muted transition-colors">Explore the role of precision medicine and how genomics is personalizing patient care like never before.</h3>
+                <div class="flex items-center gap-2 text-sm text-ink mt-auto pt-4 font-medium">
+                    Read paper <i class="ph ph-arrow-right transition-transform group-hover:translate-x-1"></i>
+                </div>
+            </article>
+            
+            <article class="group cursor-pointer flex flex-col">
+                <div class="w-full aspect-[4/3] editorial-border rounded-xl bg-surface mb-6 overflow-hidden relative">
+                    <img src="https://picsum.photos/seed/journal3/600/450" alt="Elderly Care" class="w-full h-full object-cover premium-img transition-transform duration-1000 group-hover:scale-105" />
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="flex items-center gap-3 mb-4 text-[11px] text-muted font-mono uppercase tracking-widest">
+                    <span>Geriatrics</span>
+                    <span class="text-border">•</span>
+                    <span>24 Mar 2025</span>
+                </div>
+                <h3 class="text-lg font-medium tracking-tight leading-snug mb-3 group-hover:text-muted transition-colors">See how technology-enabled support is improving life quality for seniors through seamless, dignified care.</h3>
+                <div class="flex items-center gap-2 text-sm text-ink mt-auto pt-4 font-medium">
+                    Read paper <i class="ph ph-arrow-right transition-transform group-hover:translate-x-1"></i>
+                </div>
+            </article>
+        </div>
+    </section>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Quiet, invisible staggered scroll reveals
+        const reveals = gsap.utils.toArray('.gsap-reveal');
+        
+        reveals.forEach((section) => {
+            gsap.to(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 88%", 
+                    toggleActions: "play none none none"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: "power2.out"
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
