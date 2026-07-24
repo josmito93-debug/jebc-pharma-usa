@@ -1,3 +1,4 @@
 *.bak
 *.py
 .DS_Store
+.vercel
